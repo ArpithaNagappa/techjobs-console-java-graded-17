@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -71,11 +68,11 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+            for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -95,7 +92,29 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+
+        //return new ArrayList<>(allJobs);
+        ArrayList<HashMap<String ,String>> jobs = new ArrayList<>();
+        for(HashMap<String, String> job : allJobs ) {
+            for (String key : job.keySet()) {
+                if (job.get(key).toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(job);
+                }
+            }
+        }
+  /*     Comparator <HashMap<String, String>> valueComparator = new Comparator<HashMap<String,String>>() {
+
+            @Override
+            public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
+                // Get the distance and compare the distance.
+                String position1 = (o1.get("position type"));
+                String position2 = (o2.get("position type"));
+
+                return position1.compareTo(position2);
+            }
+        };
+        return Collections.sort(jobs, valueComparator);*/
+        return jobs;
     }
 
     /**
